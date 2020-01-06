@@ -1,0 +1,37 @@
+﻿@model SAUU.Data.Entities.Estado
+
+@{
+    ViewData["Title"] = "Nuevo Estado";
+}
+
+<div class="page-header">
+    <h1>
+        <i class="fa fa-book page-header-icon"></i>
+        <a asp-action="Index">Estados</a> > @ViewData["Title"]
+    </h1>
+</div>
+<span class="text-danger">
+    @Html.ValidationSummary()
+</span>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="nombreEstado" class="control-label"></label>
+                <input asp-for="nombreEstado" class="form-control" />
+                <span asp-validation-for="nombreEstado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="colorEstado" class="control-label"></label>
+                <input asp-for="colorEstado" type="color" class="form-control" />
+                <span asp-validation-for="colorEstado" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" /> |
+                <a asp-action="Index" class="btn btn-labeled btn-primary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+

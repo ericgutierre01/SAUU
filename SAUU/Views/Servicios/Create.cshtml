@@ -1,0 +1,102 @@
+﻿@model SAUU.Data.Entities.Servicio
+
+@{
+    ViewData["Title"] = "Nuevo Servicio";
+}
+
+<div class="page-header">
+    <h1>
+        <i class="fa fa-book page-header-icon"></i>
+        <a asp-action="Index">Servicios</a> > @ViewData["Title"]
+    </h1>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label asp-for="nombreServicio" class="control-label"></label>
+                    <input asp-for="nombreServicio" class="form-control" />
+                    <span asp-validation-for="nombreServicio" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="idEscuela" class="control-label"></label>
+                    <select asp-for="idEscuela" asp-items="@(new SelectList(ViewBag.Escuelas, "idEscuela", "nombreEscuela"))"
+                            class="form-control"></select>
+                    <span asp-validation-for="idEscuela" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="prioridad" class="control-label"></label>
+                    <input asp-for="prioridad" class="form-control" />
+                    <span asp-validation-for="prioridad" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="idTipoPersona" class="control-label"></label>
+                    <select asp-for="idTipoPersona" asp-items="@(new SelectList(ViewBag.TipoPersonas, "idTipoPersona", "nombreTipoPersona"))"
+                            class="form-control"></select>
+                    <span asp-validation-for="idTipoPersona" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="col-md-5">
+                    <label class="control-label">Todos los Requerido: </label>
+                    <table border="0" id="Allrequeridos"></table>
+                </div>
+                <div class="col-md-5">
+                    <label class="control-label">Requerido Seleccionados: </label>
+                    <table border="0" id="requeridos" name="requeridos"></table>
+                </div>
+            </div>
+            
+            <div class="col-md-10">
+                <input type="submit" value="Crear" class="btn btn-primary" /> |
+                <a asp-action="Index" class="btn bg-danger"> Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+            cargar(1,'#Allrequeridos');
+        });
+        function cargar(Id, classSelect) {
+            if (Id === 0) return;
+            $.ajax({
+                url: "/ticket/GetAllRequeJson",
+                success: function (result) {
+                    var li = $(classSelect);
+                    if (result.length > 0) {
+                        li.find('tr').remove();
+                        $.each(result, function (i, itema) {
+                            // li.append('<li>' + itema.nombre + '</li>');
+                            var nom= "'" + itema.nombreRequerido + "'";
+                            li.append('<tr id="trP' + itema.idRequerido + '"><td><h4 onclick="Seleccion(' + itema.idRequerido + ',' + nom +')"><spam class="btn btn-warning">' + itema.nombreRequerido + '</spam></h4></td><td><h4 onclick="Seleccion('+itema.idRequerido+',' + nom+')"><spam class="btn btn-warning">+</spam></h4></td></tr>');
+                        });
+                    }
+                    else {
+                        li.find('tr').remove();
+                    }
+                }
+            });
+        }
+
+        function Seleccion(id, nombre) {
+            var li = $('#requeridos');
+            li.append('<tr id="tr' + id + '"><td > <input name="usr" class="btn btn-success" value="' + nombre + '" onclick="DesSeleccion(' + id + ')"/></td><td ><h4 onclick="DesSeleccion(' + id + ')"><spam class="btn btn-success">X</spam></h4></td></tr>');
+            document.getElementById("trP" + id).style.display = 'none';
+
+        }
+
+        function DesSeleccion(id) {
+            document.getElementById("tr" + id).remove();
+            document.getElementById("trP" + id).style.display = 'block';
+
+        }
+
+
+    </script>
+}

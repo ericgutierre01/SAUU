@@ -1,0 +1,120 @@
+﻿@model SAUU.Models.UsuarioCompletoViewModel
+
+@{
+    ViewData["Title"] = "Perfil";
+}
+
+<div class="page-header">
+    <h1>
+        <i class="fa fa-address-card page-header-icon"></i>
+        <a href="../">Inicio</a> > @ViewData["Title"]
+    </h1>
+</div>
+
+<div class="panel">
+    <div class="col-md-12">
+        <form asp-action="Perfil">
+            <div class="panel-body">
+                <div class="col-md-5">
+                    <legend class="color-secondary">Información De Usuario</legend>
+                    <fieldset>
+                        <div class="form-group">
+                            <label asp-for="nombreUsuario" class="control-label"></label>
+                            <input asp-for="nombreUsuario" class="form-control" />
+                            <span asp-validation-for="nombreUsuario" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="idRol" class="control-label"></label>
+                            <input asp-for="idRol" class="form-control" disabled />
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">Soy un: </label>
+                            <input asp-for="persona.stringTipoPersona" class="form-control" disabled />
+                        </div>
+
+                        <div id="estudianteDiv">
+                            <div class="form-group">
+                                <label asp-for="persona.estudiante.matriculaEstudiante" class="control-label"></label>
+                                <input asp-for="persona.estudiante.matriculaEstudiante" class="form-control" disabled />
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="persona.estudiante.Carrera" class="control-label"></label>
+                                <input asp-for="persona.estudiante.Carrera" class="form-control" disabled />
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="persona.estudiante.idEscuela" class="control-label"></label>
+                                <input asp-for="persona.estudiante.idEscuela" class="form-control" disabled />
+                            </div>
+                        </div>
+
+                        <div id="profesorDiv">
+                            <div class="form-group">
+                                <label asp-for="persona.profesor.identificadorProfesor" class="control-label"></label>
+                                <input asp-for="persona.profesor.identificadorProfesor" class="form-control" disabled />
+                            </div>
+                        </div>
+
+
+                    </fieldset>
+                </div>
+
+                <div class="col-md-6">
+                    <fieldset>
+                        <legend class="color-secondary">Información Personal</legend>
+                        <div class="form-group">
+                            <label asp-for="persona.nombrePersona" class="control-label"></label>
+                            <input asp-for="persona.nombrePersona" class="form-control" disabled />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="persona.apellidoPersona" class="control-label"></label>
+                            <input asp-for="persona.apellidoPersona" class="form-control" disabled />
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="persona.telefono" class="control-label"></label>
+                            <input asp-for="persona.telefono" class="form-control" disabled />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="persona.correo" class="control-label"></label>
+                            <input asp-for="persona.correo" class="form-control" disabled />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="persona.direccionPersona" class="control-label"></label>
+                            <input asp-for="persona.direccionPersona" class="form-control" disabled />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="persona.cedulaPersona" class="control-label"></label>
+                            <input asp-for="persona.cedulaPersona" class="form-control" disabled />
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="persona.fechaNacimiento" class="control-label"></label>
+                            <input asp-for="persona.fechaNacimiento" class="form-control" disabled />
+                        </div>
+
+                    </fieldset>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+            if (@Model.persona.idTipoPersona == 1) {
+                document.getElementById("estudianteDiv").style.display = 'block';
+                document.getElementById("profesorDiv").style.display = 'none';
+            }
+            else {
+                document.getElementById("profesorDiv").style.display = 'block';
+                document.getElementById("estudianteDiv").style.display = 'none';
+            }
+        });
+
+
+    </script>
+}

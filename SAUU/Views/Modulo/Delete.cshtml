@@ -1,0 +1,35 @@
+﻿@model SAUU.Data.Entities.Modulo
+
+@{
+    ViewData["Title"] = "Borrar Modelo";
+}
+
+<div class="page-header">
+    <h1>
+        <i class="fa fa-address-card page-header-icon"></i>
+        <a asp-action="Index">Modelos </a> > @ViewData["Title"]
+    </h1>
+</div>
+<h3>Esta seguro que desea borrar este modelo?</h3>
+<div>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.nombreModulo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.nombreModulo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.idRol)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.idRol)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="idModulo" />
+        <input type="submit" value="Borrar" class="btn btn-danger" /> |
+        <a asp-action="Index" class="btn btn-success">Cencelar</a>
+    </form>
+</div>

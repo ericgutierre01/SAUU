@@ -1,0 +1,39 @@
+﻿@model SAUU.Models.EscuelaViewModel
+
+@{
+    ViewData["Title"] = "Detalles";
+}
+
+<div class="page-header">
+    <h1>
+        <i class="fa fa-book page-header-icon"></i>
+        <a asp-action="Index">Escuelas </a> > @ViewData["Title"]
+    </h1>
+</div>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.nombreEscuela)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.nombreEscuela)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.idFacultad)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.nombreFacultad)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.correo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.correo)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.idEscuela" class="btn btn-success">Editar</a> |
+    <a asp-action="Index" class="btn btn-danger">Ir atras</a>
+</div>

@@ -1,0 +1,106 @@
+﻿@{
+    ViewData["Title"] = "Reportes";
+}
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<center><label>Tickets Creados</label></center>
+<center><div id="chart_div"></div></center>
+<center><label>Acciones de usuarios en los tickets</label></center>
+<center><div id="chart_div1"></div></center>
+
+@section Scripts{
+    <script>
+        $(function () {
+
+            google.charts.load('current', {
+                packages: ['corechart', 'bar']
+            });
+            google.charts.setOnLoadCallback(cargar);
+            google.charts.setOnLoadCallback(cargar2);
+
+        });
+        function cargar() {
+            $.ajax({
+                url: "/Reportes/GetChartJson",
+                success: function (result) {
+                    PopulationChart(result);
+                }
+            });
+        }
+        function cargar2() {
+            $.ajax({
+
+                url: '/reportes/GetChartTrakingJson',
+                dataType: "json",
+                type: "GET",
+                error: function (xhr, status, error) {
+                    var err = eval("(" + xhr.responseText + ")");
+                    toastr.error(err.message);
+                },
+                success: function (dat) {
+                    PopulationColum(dat);
+                    return false;
+                }
+            });  
+            return false; 
+        }
+
+        function PopulationChart(data) {
+            var dataArray = [
+                ['Estado', 'total']
+            ];
+            $.each(data, function (i, item) {
+                dataArray.push([item.estado, item.total]);
+            });
+            var data = google.visualization.arrayToDataTable(dataArray);
+            var options = {
+                title: 'Reportes de Tickets',
+                chartArea: {
+                    width: '80%',
+                    height: '80%'
+                },
+                colors: ['#8000ff', '#ff8800', '#ff0000', '#00ee17'],
+                hAxis: {
+                    title: 'Estado',
+                    minValue: 0
+                },
+                vAxis: {
+                    title: 'Total de reportes'
+                }
+            };
+            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+            return false;
+        }
+
+
+        function PopulationColum(data) {
+            var dataArray = [
+                ['Usuario', 'Activos', 'Visto', 'Declinados', 'Respondidos']
+            ];
+            $.each(data, function (i, item) {
+                dataArray.push([item.userNombre, item.activos, item.pendiente, item.cancelados, item.respondidos]);
+            });
+            var data = google.visualization.arrayToDataTable(dataArray);
+            var options = {
+                title: 'Acciones de Usuarios en los Tickets',
+                chartArea: {
+                    width: '50%'
+                },
+                colors: ['#8000ff', '#ff8800', '#ff0000', '#00ee17'],
+                hAxis: {
+                    title: 'Usuario',
+                    minValue: 0
+                },
+                vAxis: {
+                    title: 'Total de acciones'
+                }
+            };
+            var chart = new google.visualization.ColumnChart(document.getElementById('chart_div1'));
+
+            chart.draw(data, options);
+            return false;
+        }  
+    </script>
+}
+

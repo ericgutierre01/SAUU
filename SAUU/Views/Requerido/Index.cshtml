@@ -1,0 +1,43 @@
+﻿@model IEnumerable<SAUU.Data.Entities.Requerido>
+
+@{
+    ViewData["Title"] = "Requeridos";
+}
+
+<div class="page-header">
+    <h1><i class="fa fa-bar-chart-o page-header-icon"></i>@ViewData["Title"]</h1>
+</div> <!-- / .page-header -->
+
+<p>
+    <a class="btn btn-info btn-labeled" asp-action="Create"><span class="btn-label icon fa fa-plus"></span>Agregar Nuevo</a>
+</p>
+
+<div class="panel-body">
+    <div class="table-primary">
+        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.nombreRequerido)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nombreRequerido)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.idRequerido">Editar</a> |
+                            <a asp-action="Details" asp-route-id="@item.idRequerido">Detalles</a> |
+                            <a asp-action="Delete" asp-route-id="@item.idRequerido">Borrar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

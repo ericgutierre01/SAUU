@@ -1,0 +1,48 @@
+﻿@model IEnumerable<SAUU.Models.ModuloViewModel>
+
+@{
+    ViewData["Title"] = "Modulos";
+}
+
+<div class="page-header">
+    <h1><i class="fa fa-bar-chart-o page-header-icon"></i>@ViewData["Title"]</h1>
+</div> <!-- / .page-header -->
+
+<p>
+    <a class="btn btn-info btn-labeled" asp-action="Create"><span class="btn-label icon fa fa-plus"></span>Agregar Nuevo</a>
+</p>
+<div class="panel-body">
+    <div class="table-primary">
+        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.nombreModulo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.rol)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nombreModulo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.rol)
+                        </td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.idModulo">Detalles</a> |
+                            <a asp-action="Edit" asp-route-id="@item.idModulo">Editar</a> |
+                            <a asp-action="Delete" asp-route-id="@item.idModulo">Borrar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

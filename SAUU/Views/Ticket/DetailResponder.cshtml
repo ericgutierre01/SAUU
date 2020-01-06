@@ -1,0 +1,242 @@
+﻿@model SAUU.Data.Entities.Ticket
+
+@{
+    ViewData["Title"] = "Detalle de Ticket";
+}
+
+<style>
+    #confirmOverlay {
+        display:none;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: url('ie.png');
+        background: -moz-linear-gradient(rgba(11,11,11,0.1), rgba(11,11,11,0.6)) repeat-x rgba(11,11,11,0.2);
+        background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(11,11,11,0.1)), to(rgba(11,11,11,0.6))) repeat-x rgba(11,11,11,0.2);
+        z-index: 100000;
+    }
+
+    #confirmBox {
+        overflow: scroll;
+        background: url('body_bg.jpg') repeat-x left bottom #e5e5e5;
+        width: 460px;
+        height:400px;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        margin: -130px 0 0 -230px;
+        border: 1px solid rgba(33, 33, 33, 0.6);
+        -moz-box-shadow: 0 0 2px rgba(255, 255, 255, 0.6) inset;
+        -webkit-box-shadow: 0 0 2px rgba(255, 255, 255, 0.6) inset;
+        box-shadow: 0 0 2px rgba(255, 255, 255, 0.6) inset;
+    }
+
+        #confirmBox h1,
+        #confirmBox p {
+            font: 26px/1 'Cuprum','Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+            background: url('header_bg.jpg') repeat-x left bottom #f5f5f5;
+            padding: 18px 25px;
+            text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.6);
+            color: #666;
+        }
+
+        #confirmBox h1 {
+            letter-spacing: 0.3px;
+            color: #888;
+        }
+
+        #confirmBox p {
+            background: none;
+            font-size: 16px;
+            line-height: 1.4;
+            padding-top: 35px;
+        }
+
+    #confirmButtons {
+        left: 50%;
+        top: 50%;
+        margin: -130px 0 0 -230px;
+        padding: 15px 0 25px;
+        text-align: center;
+    }
+
+    #confirmBox .button {
+        display: inline-block;
+        background: url('buttons.png') no-repeat;
+        color: white;
+        position: relative;
+        height: 33px;
+        font: 17px/33px 'Cuprum','Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+        margin-right: 15px;
+        padding: 0 35px 0 40px;
+        text-decoration: none;
+        border: none;
+    }
+
+
+</style>
+
+<div class="page-header">
+    <h1>
+        <i class="fa fa-address-card page-header-icon"></i>
+        <a asp-action="Index">Ticket </a> > @ViewData["Title"]
+    </h1>
+</div>
+
+<span style="list-style-type: none">
+    @Html.ValidationSummary()
+</span>
+
+<div class="content-wrapper">
+
+    <div class="row">
+
+        <form asp-action="DetailResponder" method="post" enctype="multipart/form-data">
+            <div class="col-md-12">
+                <div class="col-md-8">
+                    <h3><span class="well well-sm">Ticket No.:</span> @Model.idTicket</h3>
+                    <h3> <span class="well well-sm">Enviado por: </span>@ViewBag.usuarioNombre  <a asp-controller="Persona" asp-action="Details" target="_blank" asp-route-id="@ViewBag.personaId" class="btn btn-labeled btn-primary">Ver</a></h3>
+                    <h3><span class="well well-sm"> Asunto: </span>@Model.asunto</h3>
+                    <h3><span class="well well-sm"> Comentario:</span> @Model.comentario</h3>
+                    <h3> <span class="well well-sm">Servicio: </span>@ViewBag.servicioNombre</h3>
+                    <h3><span class="well well-sm">Fecha creacion:</span> @Model.fechaCreacion.ToString("h:mm tt MMMM d, yyyy")</h3>
+
+                    <h3>
+                        Estado:
+                        <select asp-for="idEstado" asp-items="@(new SelectList(ViewBag.Estados, "idEstado", "nombreEstado"))"
+                                class="form-control" id="estado"></select>
+                    </h3>
+                    <hr style="color: #0056b2;" />
+                    <h3>Respuestas: </h3>
+                    <table border="0" id="respuestas" width="50%"></table>
+                    <hr style="color: #0056b2;" />
+
+                </div>
+
+                <div class="col-md-4">
+                    <center><h3>Archivos: </h3></center>
+                    <table border="0" id="requeridos" width="100%"></table>
+                    <a class="btn btn-primary" onclick="Pop()">Ver Traking del ticket</a>
+                </div>
+
+
+            </div>
+
+            <div class="panel-body">
+
+                <input asp-for="asunto" class="form-control" style="display: none;" />
+                <input asp-for="comentario" rows="12" class="form-control" style="display: none;" />
+                <input asp-for="idTicket" rows="12" class="form-control" style="display: none;" />
+                <input asp-for="idServicio" rows="12" class="form-control" style="display: none;" />
+                <input asp-for="idUsuario" rows="12" class="form-control" style="display: none;" />
+                <input asp-for="fechaCreacion" rows="12" class="form-control" style="display: none;" />
+
+                <input name="respuesta" placeholder="Escriba una respuesta" class="form-control" />
+
+            </div>
+
+            <div id="confirmOverlay">
+                <div id="confirmBox">
+                    <a class="btn btn-danger" onclick="Pop()">Cerrar</a>
+                    <center><label>Cambios Realizados</label></center>
+                    <table border="1" id="traking" width="100%"></table>
+                </div>
+
+            </div>
+
+            <div class="panel-footer text-right">
+                <button class="btn btn-labeled btn-success" id="guardar_btn">
+                    <span class="btn-label icon fa fa-save"></span>Enviar Ticket
+                </button>
+                <a asp-action="Index" class="btn btn-labeled btn-danger">Cancelar</a>
+            </div>
+        </form>
+
+
+    </div>
+</div>
+@section Scripts{
+    <script>
+            $(function () {
+                //Pop();
+                cargar('#requeridos');
+                cargarRespuestas('#respuestas');
+                cargarTraking('#traking');
+       
+            });
+            function cargar(classSelect) {
+                $.ajax({
+
+                    url: "/ticket/GetArchivosJson?Id=" + @Model.idTicket,
+                    success: function (result) {
+                        var li = $(classSelect);
+                        if (result.length > 0) {
+                            li.find('tr').remove();
+                            $.each(result, function (i,itema) {
+                                // li.append('<li>' + itema.nombre + '</li>');
+                                li.append('<tr><td><div class="panel panel-danger panel-dark panel-body-colorful widget-profile widget-profile-centered"><img src="../../img/no_imagen.png" class="widget-profile-avatar">'
+                                    + '<a href="../../archivos/' + itema.archivo + '" target="_blank">Ver Archivo </a></div></td></tr>');
+                            });
+                        }
+                        else {
+                            //li.find('tr').remove();
+                        }
+                    }
+                });
+            }
+
+
+        function cargarRespuestas(classSelect) {
+                $.ajax({
+
+                    url: "/ticket/GetRespuestasJson?Id=" + @Model.idTicket,
+                    success: function (result) {
+                        var li = $(classSelect);
+                        if (result.length > 0) {
+                            li.find('tr').remove();
+                            $.each(result, function (i,itema) {
+                                // li.append('<li>' + itema.nombre + '</li>');
+                                li.append('<tr><td><h4>-' + itema.mensaje + '</h4></td></tr>');
+                            });
+                        }
+                        else {
+                            //li.find('tr').remove();
+                        }
+                    }
+                });
+        }
+
+
+                function cargarTraking(classSelect) {
+                $.ajax({
+
+                    url: "/ticket/GetTrakingJson?Id=" + @Model.idTicket,
+                    success: function (result) {
+                        var li = $(classSelect);
+                        if (result.length > 0) {
+                            li.find('tr').remove();
+                            $.each(result, function (i,itema) {
+                                // li.append('<li>' + itema.nombre + '</li>');
+                                li.append('<tr><td><h4> Usuario: ' + itema.idUser + '- Cambios: ' + itema.cambioRealizado + ' - Fecha: ' + itema.fechaTraking+'-</h4></td></tr>');
+                            });
+                        }
+                        else {
+                            //li.find('tr').remove();
+                        }
+                    }
+                });
+        }
+
+        function Pop() {
+            if (document.getElementById("confirmOverlay").style.display == 'none') {
+                document.getElementById("confirmOverlay").style.display = 'block';
+            }
+            else {
+                document.getElementById("confirmOverlay").style.display = 'none';
+            }
+        }
+
+    </script>
+}

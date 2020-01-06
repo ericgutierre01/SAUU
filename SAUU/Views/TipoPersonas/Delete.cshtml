@@ -1,0 +1,25 @@
+﻿@model SAUU.Data.Entities.TipoPersona
+
+@{
+    ViewData["Title"] = "Borrar";
+}
+
+<h3>Esta Seguro que desea borrar este Tipo?</h3>
+<div>
+    <h4>TipoPersona</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.nombreTipoPersona)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.nombreTipoPersona)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="idTipoPersona" />
+        <input type="submit" value="Borrar" class="btn btn-danger" /> |
+        <a asp-action="Index" class="btn btn-labeled btn-primary">Cancelar</a>
+    </form>
+</div>

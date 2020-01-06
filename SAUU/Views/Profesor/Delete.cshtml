@@ -1,0 +1,40 @@
+﻿@model SAUU.Data.Entities.Profesor
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+@{
+    ViewData["Title"] = "Borrar";
+}
+
+<div class="page-header">
+    <h1><i class="fa fa-bar-chart-o page-header-icon"></i>@ViewData["Title"]</h1>
+</div> <!-- / .page-header -->
+
+
+<h3>Esta seguro que desea borrar este profesor</h3>
+<div>
+    <h4>Profesor</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.identificadorProfesor)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.identificadorProfesor)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.idPersona)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.idPersona)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="idProfesor" />
+        <input type="submit" value="Borrar" class="btn btn-danger" /> |
+        <a asp-action="Index" class="btn btn-primary">Cancelar</a>
+    </form>
+</div>

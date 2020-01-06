@@ -1,0 +1,101 @@
+﻿@model SAUU.Data.Entities.Ticket
+
+@{
+    ViewData["Title"] = "Nuevo Ticket";
+}
+
+<div class="page-header">
+    <h1>
+        <i class="fa fa-book page-header-icon"></i>
+        <a asp-action="Index">Tickets </a> > @ViewData["Title"]
+    </h1>
+</div>
+<span class="text-danger">
+    @Html.ValidationSummary()
+</span>
+
+<div class="panel">
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <div class="panel-body">
+            <fieldset>
+                <legend class="color-secondary">Información General</legend>
+                <div class="col-md-4">
+                    <div class="control-group">
+                        <label asp-for="idServicio" class="control-label"></label>
+                        <select asp-for="idServicio" asp-items="@(new SelectList(ViewBag.Servicios, "idServicio", "nombreServicio"))"
+                                class="form-control" id="servicio" onchange="cargar(this.value, '#requeridos')" required></select>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="control-group">
+                        <label asp-for="asunto" class="control-label"></label>
+                        <input asp-for="asunto" class="form-control" id="asunto" required />
+                        <span asp-validation-for="asunto" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-9">
+                    <div class="control-group">
+                        <label asp-for="comentario" class="control-label"></label>
+                        <input asp-for="comentario" rows="12" class="form-control" />
+                        <span asp-validation-for="comentario" class="text-danger"></span>
+
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="control-group">
+                        <label class="control-label">Requerido: </label>
+                        <table border="0" id="requeridos"></table>
+                        <label class="col-xs-12 ticket-attachments-message text-muted">
+                            Extensiones de archivo permitidas: .jpg, .jpeg, .png, .pdf
+                        </label>
+                        <label id="mensaje"></label>
+                    </div>
+                </div>
+
+            </fieldset>
+        </div>
+        <div class="panel-footer text-right">
+            <button class="btn btn-labeled btn-success" id="guardar_btn">
+                <span class="btn-label icon fa fa-save"></span>Enviar Ticket
+            </button>
+            <a asp-action="Index" class="btn btn-labeled btn-danger">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+            cargar(document.getElementById("servicio").value, '#requeridos');
+        });
+        function cargar(Id, classSelect) {
+            if (Id === 0) return;
+            $.ajax({
+                url: "/ticket/GetJson?Id=" + Id,
+                success: function (result) {
+                    var li = $(classSelect);
+                    if (result.length > 0) {
+                        li.find('tr').remove();
+                        $.each(result, function (i, itema) {
+                            // li.append('<li>' + itema.nombre + '</li>');
+                            li.append('<tr><td><h4>-' + itema.nombre + '</h4></td><td><input class="btn btn-primary" type="file" id="' + itema.nombre + '" name="archivos" required/></td></tr>');
+                        });
+                    }
+                    else {
+                        li.find('tr').remove();
+                    }
+                }
+            });
+        }
+
+
+       /* $("#guardar_btn").click(function () {
+            document.getElementById("mensaje").innerHTML = "Intentando enviar...";
+            document.getElementById("mensaje").style.color = "#ff0000";
+            document.getElementById("mensaje").style.fontWeight = "bold"
+        });*/
+    </script>
+}
+

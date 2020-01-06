@@ -1,0 +1,76 @@
+﻿@model SAUU.Data.Entities.Estudiante
+
+@{
+    ViewData["Title"] = "Editar";
+}
+
+<div class="page-header">
+    <h1>
+        <i class="fa fa-book page-header-icon"></i>
+        <a asp-action="Index">Estudiantes </a> > @ViewData["Title"]
+    </h1>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="idEstudiante" />
+            <div class="form-group">
+                <label asp-for="idPersona" class="control-label"></label>
+                <select asp-for="idPersona" asp-items="@(new SelectList(ViewBag.Persona, "idPersona", "nombrePersona"))"
+                        class="form-control" id="idpersonaa" onchange="cargar(this.value, '#personaa')" required></select>
+                <span asp-validation-for="idPersona" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Matricula</label>
+                <input asp-for="matriculaEstudiante" class="form-control" required />
+                <span asp-validation-for="matriculaEstudiante" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Carrera" class="control-label"></label>
+                <input asp-for="Carrera" class="form-control" required />
+                <span asp-validation-for="Carrera" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="idEscuela" class="control-label"></label>
+                <select asp-for="idEscuela" asp-items="@(new SelectList(ViewBag.Escuela, "idEscuela", "nombreEscuela"))"
+                        class="form-control" required></select>
+                <span asp-validation-for="idEscuela" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <table border="0" id="personaa"></table>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-labeled btn-danger">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        $(function () {
+            cargar(document.getElementById("idpersonaa").value, '#personaa');
+        });
+        function cargar(Id, classSelect) {
+            if (Id === 0) return;
+            $.ajax({
+                url: "/profesor/GetPersoJson?Id=" + Id,
+                success: function (result) {
+                    var li = $(classSelect);
+                    li.find('tr').remove();
+                    li.append('<tr><td><h4> Cedular: ' + result.cedulaPersona + '</h4></td></tr>');
+                    li.append('<tr><td><h4> Correo: ' + result.correo + '</h4></td></tr>');
+                    li.append('<tr><td><h4> Telefono: ' + result.telefono + '</h4></td></tr>');
+
+                }
+            });
+        }
+
+    </script>
+}

@@ -1,0 +1,93 @@
+﻿@model SAUU.Data.Entities.Ticket
+
+@{
+    ViewData["Title"] = "Detalle de Ticket";
+}
+
+<div class="page-header">
+    <h1>
+        <i class="fa fa-address-card page-header-icon"></i>
+        <a asp-action="Index">Ticket </a> > @ViewData["Title"]
+    </h1>
+</div>
+
+<span style="list-style-type: none">
+    @Html.ValidationSummary()
+</span>
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-8">
+                <h3><span class="well well-sm">Ticket No.:</span> @Model.idTicket</h3>
+                <h3><span class="well well-sm"> Asunto: </span>@Model.asunto</h3>
+                <h3><span class="well well-sm"> Comentario:</span> @Model.comentario</h3>
+                <h3> <span class="well well-sm">Servicio: </span>@ViewBag.servicioNombre</h3>
+                <h3><span class="well well-sm">Fecha creacion:</span> @Model.fechaCreacion.ToString("h:mm tt MMMM d, yyyy")</h3>
+                <h3><span class="well well-sm">Estado:</span> @ViewBag.estadoNombre</h3>
+
+                <hr style="color: #0056b2;" />
+                <h3>Respuestas: </h3>
+                <table border="0" id="respuestas" style="background-color:#FFFFE0;" width="50%"></table>
+                <hr style="color: #0056b2;" />
+            </div>
+            <div class="col-md-4">
+                <center><h3>Archivos: </h3></center>
+
+                <table border="0" id="requeridos" width="100%">
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+    @section Scripts{
+        <script>
+            $(function () {
+                cargar('#requeridos');
+                cargarRespuestas('#respuestas');
+            });
+            function cargar(classSelect) {
+                $.ajax({
+                    
+                    url: "/ticket/GetArchivosJson?Id=" + @Model.idTicket,
+                    success: function (result) {
+                        var li = $(classSelect);
+                        if (result.length > 0) {
+                            li.find('tr').remove();
+                            $.each(result, function (i,itema) {
+                                // li.append('<li>' + itema.nombre + '</li>');
+                                li.append('<tr><td><div class="panel panel-danger panel-dark panel-body-colorful widget-profile widget-profile-centered"><img src="../../img/no_imagen.png" class="widget-profile-avatar">'
+                                    + '<a href="../../archivos/' + itema.archivo + '" target="_blank">Ver Archivo </a></div></td></tr>');
+                            });
+                        }
+                        else {
+                            //li.find('tr').remove();
+                        }
+                    }
+                });
+            }
+
+                    function cargarRespuestas(classSelect) {
+                $.ajax({
+                    
+                    url: "/ticket/GetRespuestasJson?Id=" + @Model.idTicket,
+                    success: function (result) {
+                        var li = $(classSelect);
+                        if (result.length > 0) {
+                            li.find('tr').remove();
+                            $.each(result, function (i,itema) {
+                                // li.append('<li>' + itema.nombre + '</li>');
+                                li.append('<tr><td><h4>-' + itema.mensaje + '</h4></td></tr>');
+                            });
+                        }
+                        else {
+                            //li.find('tr').remove();
+                        }
+                    }
+                });
+            }
+
+        </script>
+    }

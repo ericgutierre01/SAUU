@@ -1,0 +1,31 @@
+﻿@model SAUU.Data.Entities.Estado
+
+@{
+    ViewData["Title"] = "Detalle";
+}
+
+<div class="page-header">
+    <h1><i class="fa fa-bar-chart-o page-header-icon"></i>@ViewData["Title"]</h1>
+</div> <!-- / .page-header -->
+
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.nombreEstado)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.nombreEstado)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.colorEstado)
+        </dt>
+        <dd class="col-sm-10">
+            <span class="label ticket-label" style="background-color:@Model.colorEstado;">@Model.colorEstado</span>
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.idEstado" class="btn btn-labeled btn-primary">Editar</a> |
+    <a asp-action="Index" class="btn btn-labeled btn-primary">Atras</a>
+</div>

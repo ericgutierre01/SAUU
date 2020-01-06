@@ -1,0 +1,110 @@
+﻿@model IEnumerable<SAUU.Models.TicketViewModel>
+@{
+    ViewData["Title"] = "Tickets";
+}
+
+<div class="page-header">
+    <h1><i class="fa fa-bar-chart-o page-header-icon"></i>@ViewData["Title"]</h1>
+</div> <!-- / .page-header -->
+
+
+<div class="panel-body">
+    <div class="table-primary">
+        <label>
+            <i class="fa fa-filter"></i> Filtros
+            <select asp-items="@(new SelectList(ViewBag.Estados, "colorEstado", "nombreEstado"))"
+                    id="estado" onchange="Filtrar(this.options[this.selectedIndex].text)" class="btn btn-info btn-labeled">
+                <option value="#000000">Todos</option>
+            </select>
+        </label>
+        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped" id="tableJs">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th class="text-center">#</th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.asunto)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.comentario)
+                    </th>
+                    <th>Servicio</th>
+                    <th>Fecha Creacion</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    @foreach (var item in Model)
+                    {
+                <tr>
+                    <td class="text-center">
+                        <a asp-action="Detail" asp-route-id="@item.idTicket" class="btn btn-outline btn-xs btn-info"><span class="btn-label icon fa fa-eye"></span></a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.idTicket)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.asunto)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.comentario)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nombreServicio)
+                    </td>
+                    <td>@item.fechaCreacion.ToString("MMMM d, yyyy")</td>
+                    <td class="text-center" style="width:100px">
+                        <span class="label ticket-label" style="background-color:@item.Color;">@item.Estado</span>
+                    </td>
+                </tr>
+                    }
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("div.table-caption").html('<a href="/Ticket/Nuevo" class="btn btn-info btn-labeled"><span class="btn-label icon fa fa-plus"></span>Agregar Nuevo</a> ');
+        });
+
+
+        function Filtrar(value) {
+            // Declare variables
+
+            var table, tr, td, i, j, visible;
+            /*var input = document.getElementById("estado");
+            input.style.color = input.value;*/
+
+            table = document.getElementById("tableJs");
+            tr = table.getElementsByTagName("tr");
+
+            if (value == "Todos") {
+                value = "";
+            }
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+                visible = false;
+                /* Obtenemos todas las celdas de la fila, no sólo la primera */
+                td = tr[i].getElementsByTagName("td");
+                for (j = 0; j < td.length; j++) {
+                    if (td[j] && td[j].innerHTML.indexOf(value) > -1) {
+                        visible = true;
+                    }
+                }
+                if (visible === true) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+
+    </script>
+}

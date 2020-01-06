@@ -1,0 +1,79 @@
+﻿@model SAUU.Models.ServiciosViewModel
+
+@{
+    ViewData["Title"] = "Detalle";
+}
+
+<div class="page-header">
+    <h1>
+        <i class="fa fa-book page-header-icon"></i>
+        <a asp-action="Index">Servicios</a> > @ViewData["Title"]
+    </h1>
+</div>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.nombreServicio)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.nombreServicio)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.idEscuela)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.nombreEscuela)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.prioridad)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.prioridad)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.idTipoPersona)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.stringTipoPersona)
+        </dd>
+    </dl>
+    <div class="control-group">
+        <label class="control-label">Requerido: </label>
+        <table border="0" id="requeridos"></table>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.idServicio" class="btn btn-labeled btn-primary">Editar</a> |
+    <a asp-action="Index" class="btn btn-labeled btn-primary">Ir atras</a>
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+            cargar(@Model.idServicio.ToString(), '#requeridos');
+        });
+        function cargar(Id, classSelect) {
+            if (Id === 0) return;
+            $.ajax({
+                url: "/ticket/GetJson?Id=" + Id,
+                success: function (result) {
+                    var li = $(classSelect);
+                    if (result.length > 0) {
+                        li.find('tr').remove();
+                        $.each(result, function (i, itema) {
+                            // li.append('<li>' + itema.nombre + '</li>');
+                            li.append('<tr><td><h4><spam class="btn btn-success">-' + itema.nombre + '</spam></h4></td></tr>');
+                        }); 
+                    }
+                    else {
+                        li.find('tr').remove();
+                    }
+                }
+            });
+        }
+
+
+    </script>
+}

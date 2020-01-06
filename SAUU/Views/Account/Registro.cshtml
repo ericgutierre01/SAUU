@@ -1,0 +1,143 @@
+﻿@model SAUU.Data.Entities.Usuario
+@{
+    Layout = "_LayoutAccount";
+}
+<!-- Container -->
+<div class="signin-container">
+    <!-- Right side -->
+    <div class="signin-form">
+        <!-- Form -->
+        <form asp-action="Registro" method="post" asp-route-returnurl="@ViewData["ReturnUrl"]">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="signin-text">
+                <span>Registro de usuario</span>
+            </div> <!-- / .signin-text -->
+            <div class="form-group w-icon">
+                <input type="text" asp-for="nombreUsuario" class="form-control input-lg" placeholder="Usuario" required>
+                <span class="fa fa-user signin-form-icon"></span>
+            </div> <!-- / Username -->
+
+            <div class="form-group w-icon">
+                <input type="password" asp-for="passUsuario" id="pass" class="form-control input-lg" placeholder="Contraseña" required>
+                <span class="fa fa-lock signin-form-icon"></span>
+            </div> <!-- / Password -->
+
+            <div class="form-group w-icon">
+                <input type="password" id="passConfir" class="form-control input-lg" placeholder="Confirmar Contraseña" required>
+                <span class="fa fa-lock signin-form-icon"></span>
+            </div> <!-- / Password -->
+
+
+            <Center>
+                <div class="form-group w-icon">
+                    <label class="control-label">Soy un:</label>
+                    <select asp-items="@(new SelectList(ViewBag.TipoPersona, "idTipoPersona", "nombreTipoPersona"))"
+                            Class="form-control" id="tipoP" onchange="CTipo(this.value, '#identificador')"></select>
+                </div>
+            </Center>
+
+            <div class="form-group w-icon">
+                <div class="control-group">
+                    <label class="control-label" id="identificador">Matricula:</label>
+                    <input class="form-control" id="identidicadorEntry" />
+                    <input asp-for="idPersona" id="personaid" class="form-control" style="display: none" />
+                </div>
+            </div>
+
+            <div class="form-group w-icon">
+                <div class="control-group">
+                    <Center><label class="control-label" id="mensaje"></label></Center>
+                </div>
+            </div>
+
+            <div class="signin-with">
+                <button class="btn btn-info btn-lg" style="width:100%" id="guardar_btn" disabled><span>Registrarse</span></button>
+            </div>
+            <div class="signin-with">
+                <Center> <a asp-action="Login">Ya tengo una cuenta</a></Center>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        var isPass = false;
+        $(function () {
+
+            CTipo(document.getElementById("tipoP").value, '#identificador');
+            verificador();
+        });
+
+        function CTipo(Id, classSelect) {
+            var li = $(classSelect);
+            tipoP
+            if (Id == 1) {
+                li.text('Matricula:');
+            }
+            if (Id == 2) {
+                li.text('Cedula:');
+            }
+            verificador();
+        }
+
+        function verificador() {
+            $.ajax(
+                {
+                    url: "/usuario/GetJson?valor=" + document.getElementById("identidicadorEntry").value + "?" + document.getElementById("tipoP").value,
+                    success: function (result) {
+                        if (result != 0) {
+                            document.getElementById("mensaje").innerHTML = "Encontrado";
+                            document.getElementById("mensaje").style.color = "#03fc3d";
+                            if (isPass == true) {
+                                document.getElementById("guardar_btn").disabled = false;
+                            }
+                            else {
+                                document.getElementById("guardar_btn").disabled = true;
+                            }
+
+                            document.getElementById("personaid").value = result;
+                        }
+                        else {
+                            document.getElementById("mensaje").innerHTML = "No Encontrado";
+                            document.getElementById("mensaje").style.color = "#fc0303";
+                            document.getElementById("guardar_btn").disabled = true;
+                        }
+
+                        var x = document.getElementById("tipoP");
+                        x.remove(2);
+                    }
+                });
+
+
+        }
+
+        function ConfirmarPass()
+        {
+            var passs = document.getElementById("pass").value;
+            var passConfirr = document.getElementById("passConfir").value;
+
+            if (passs == passConfirr) {
+                isPass = true;
+                $("#passConfir").css('background-color', 'white');
+            }
+            else {
+                isPass = false;
+                $("#passConfir").css('background-color', 'red');
+            }
+            verificador();
+        }
+
+        $("#identidicadorEntry").on("keyup", function () {
+            verificador();
+        });
+
+        $("#pass").on("keyup", function () {
+            ConfirmarPass();
+        });
+
+        $("#passConfir").on("keyup", function () {
+            ConfirmarPass();
+        });
+    </script>
+}

@@ -1,0 +1,64 @@
+﻿@model SAUU.Models.PersonaCompletaViewModel
+
+@{
+    ViewData["Title"] = "Detalles";
+}
+
+<div class="page-header">
+    <h1>
+        <i class="fa fa-book page-header-icon"></i>
+        <a asp-action="Index">Personas </a> > @ViewData["Title"]
+    </h1>
+</div>
+
+
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-5">
+                <h3><span class="well well-sm">Nombre:</span>@Model.nombrePersona</h3>
+                <h3><span class="well well-sm">Apellido:</span>@Model.apellidoPersona</h3>
+                <h3><span class="well well-sm">Telefono:</span>@Model.telefono</h3>
+                <h3><span class="well well-sm">Correo:</span>@Model.correo</h3>
+                <h3><span class="well well-sm">Direccion:</span>@Model.direccionPersona</h3>
+                <h3><span class="well well-sm">Cedula</span>@Model.cedulaPersona</h3>
+                <h3><span class="well well-sm">Nacimiento:</span>@Model.fechaNacimiento</h3>
+            </div>
+
+            <div class="col-md-5" id="estudianteDiv">
+                <h3><span class="well well-sm">Es un:</span>@Model.stringTipoPersona</h3>
+                <h3><span class="well well-sm">Matricula:</span>@Html.DisplayFor(model => model.estudiante.matriculaEstudiante)</h3>
+                <h3><span class="well well-sm">Id Escuela:</span>@Html.DisplayFor(model => model.estudiante.idEscuela)</h3>
+                <h3><span class="well well-sm">Carrera:</span>@Html.DisplayFor(model => model.estudiante.Carrera)</h3>
+            </div>
+
+            <div class="col-md-5" id="profesorDiv">
+                <h3><span class="well well-sm">Es un:</span>@Model.stringTipoPersona</h3>
+                <h3><span class="well well-sm">Identificador:</span>@Html.DisplayFor(model => model.profesor.identificadorProfesor)</h3>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.idPersona" class="btn btn-primary">Editar</a> |
+    <a asp-action="Index" class="btn btn-danger">Ir atras</a>
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+            if (@Model.idTipoPersona == 1) {
+                document.getElementById("estudianteDiv").style.display = 'block';
+                document.getElementById("profesorDiv").style.display = 'none';
+            }
+            else {
+                document.getElementById("profesorDiv").style.display = 'block';
+                document.getElementById("estudianteDiv").style.display = 'none';
+            }
+        });
+
+
+    </script>
+}

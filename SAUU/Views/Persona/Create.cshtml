@@ -1,0 +1,77 @@
+﻿@model SAUU.Data.Entities.Persona
+
+@{
+    ViewData["Title"] = "Nueva Persona";
+}
+
+<div class="page-header">
+    <h1>
+        <i class="fa fa-book page-header-icon"></i>
+        <a asp-action="Index">Personas </a> > @ViewData["Title"]
+    </h1>
+</div>
+
+<span class="text-danger">
+    @Html.ValidationSummary()
+</span>
+
+<div class="panel">
+
+    <form asp-action="Create">
+        <div class="panel-body">
+            <fieldset>
+                <legend class="color-secondary">Información General</legend>
+                <div class="form-group">
+                    <label asp-for="nombrePersona" class="control-label"></label>
+                    <input asp-for="nombrePersona" class="form-control" required />
+                    <span asp-validation-for="nombrePersona" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="apellidoPersona" class="control-label"></label>
+                    <input asp-for="apellidoPersona" class="form-control" required />
+                    <span asp-validation-for="apellidoPersona" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="idTipoPersona" class="control-label"></label>
+                    <select asp-for="idTipoPersona" asp-items="@(new SelectList(ViewBag.TipoPersona, "idTipoPersona", "nombreTipoPersona"))"
+                            class="form-control" required></select>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="telefono" class="control-label"></label>
+                    <input asp-for="telefono" class="form-control" />
+                    <span asp-validation-for="telefono" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="correo" class="control-label"></label>
+                    <input asp-for="correo" class="form-control" required />
+                    <span asp-validation-for="correo" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="direccionPersona" class="control-label"></label>
+                    <input asp-for="direccionPersona" class="form-control"  />
+                    <span asp-validation-for="direccionPersona" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="cedulaPersona" class="control-label"></label>
+                    <input asp-for="cedulaPersona" class="form-control" required />
+                    <span asp-validation-for="cedulaPersona" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="fechaNacimiento" class="control-label"></label>
+                    <input asp-for="fechaNacimiento" class="form-control"  required />
+                    <span asp-validation-for="fechaNacimiento" class="text-danger"></span>
+                </div>
+
+                <div class="panel-footer text-right">
+                    <button class="btn btn-labeled btn-success" id="guardar_btn">
+                        <span class="btn-label icon fa fa-save"></span>Guardar
+                    </button>
+                    <a asp-action="Index" class="btn btn-labeled btn-danger">Cancelar</a>
+                </div>
+            </fieldset>
+        </div>
+    </form>
+</div>
+
+

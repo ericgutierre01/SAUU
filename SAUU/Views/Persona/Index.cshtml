@@ -1,0 +1,80 @@
+﻿@model IEnumerable<SAUU.Models.PersonaViewModel>
+
+@{
+    ViewData["Title"] = "Personas";
+}
+
+<div class="page-header">
+    <h1><i class="fa fa-bar-chart-o page-header-icon"></i>@ViewData["Title"]</h1>
+</div> <!-- / .page-header -->
+<!--<p>
+    <a class="btn btn-info btn-labeled" asp-action="Create"><span class="btn-label icon fa fa-plus"></span>Agregar Nuevo</a>
+</p>-->
+
+<div class="panel-body">
+    <div class="table-primary">
+        <table cellpadding="0" cellspacing="0" border="0" class="table table-striped" id="tableJs">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.nombrePersona)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.apellidoPersona)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.idTipoPersona)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.telefono)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.correo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.direccionPersona)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nombrePersona)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.apellidoPersona)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.stringTipoPersona)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.telefono)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.correo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.direccionPersona)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.idPersona">Editar</a> |
+                            <a asp-action="Details" asp-route-id="@item.idPersona">Detalles</a> |
+                            <a asp-action="Delete" asp-route-id="@item.idPersona">Borrar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("div.table-caption").html('<a href="/Persona/Nuevo" class="btn btn-info btn-labeled"><span class="btn-label icon fa fa-plus"></span>Agregar Nuevo</a>');
+        });</script>
+}
+

@@ -1,0 +1,54 @@
+loopOut(type = "cycle", numKeyframes = 0)
+
+9D4FF64D56E0B280A87E
+
+
+   Descripción . . . . . . . . . . . . . . . : Intel(R) Dual Band Wireless-AC 7265
+   Dirección física. . . . . . . . . . . . . : DC-53-60-82-58-11
+{882D9D57-862B-40A2-BA7E-0D76B1E5B37E}
+
+
+ [position[0], position[1], index]
+
+manuelisking@hotmail.com
+manuelisking2018rd
+
+runner de plataformas, en el cual puede poner piso o escalera
+
+
+connectionString="Data Source=DESKTOP-ASUS\SQLEXPRESS;Initial Catalog=Sispago;Integrated Security=True"
+endygutierrezencarnacion@gmail.com
+Gutierrez15
+$java -jar pepk.jar --keystore=user.keystore --alias=gutierrez1 --output=private_key.pem --encryptionkey=eb10fe8f7c7c9df715022017b00c6471f8ba8170b13049a11e6c09ffe3056a104a3bbe4ac5a955f4ba4fe93fc8cef27558a3eb9d2a529a2092761fb833b656cd48b9de6a
+
+
+                MessageBox.Show("Erro al Cargar los datos");
+                try
+                {
+                    StreamWriter sw = new StreamWriter("C:\\factpat\\Errores.txt", true, Encoding.ASCII);
+                    sw.WriteLine(ex.Message + "//" + DateTime.Now.ToString());
+                    sw.Close();
+                }
+                catch (Exception exx)
+                {
+                    MessageBox.Show(exx.Message);
+                }
+
+http://www.poweredbyliquidfire.mobi/redirect?sl=16&t=dr&track=125138_223296&siteid=223296 EN
+
+http://www.poweredbyliquidfire.mobi/redirect?sl=16&t=dr&track=124513_222494&siteid=222494 ER
+
+http://www.poweredbyliquidfire.mobi/redirect?sl=16&t=dr&track=125528_223702&siteid=223702 WI
+
+http://www.poweredbyliquidfire.mobi/redirect?sl=16&t=dr&track=125527_223714&siteid=223714 LI
+
+the best boods and this of hot, sexy woman, swipe up and register for more
+
+swipe up And sign up for free access
+
+Notas par ael juego:
+implementar paso atras
+
+
+
+buenas, no se que por que me han inhabilitado mi cuenta, no creo haber hecho nada malo, solo le doy un uso normal, les pido por favor me la habiliten nuevamente, es que es mi correo personal y es donde tengo toda mi información. Información con gran valor sentimental, como todas mis fotos, mis documentos, contactos, etc, ademas de que todo mis amigos y familiares tienen ese correo como vía de contacto, por favor necesito habilitar mi cuenta nuevamente, tengo varios días sin poder usarla y la he pasado muy mal. no he hecho nada malo con mi cuenta, por favor revicen

@@ -1,0 +1,40 @@
+﻿@model LoginViewModel
+@{
+    Layout = "_LayoutAccount";
+}
+<!-- Container -->
+<div class="signin-container">
+    <!-- Left side -->
+    <div class="signin-info">
+        <a href="./Login" class="logo">
+            <img src="assets/demo/logo-big.png" alt="" style="margin-top: -5px;">&nbsp;
+            SAUU
+        </a> <!-- / .logo -->
+        <div class="slogan">
+            Sistema de atencion al Usuario Universitario
+        </div> <!-- / .slogan -->
+    </div>
+    <!-- / Left side -->
+    <!-- Right side -->
+    <div class="signin-form">
+        <!-- Form -->
+        <form asp-action="Login" method="post" asp-route-returnurl="@ViewData["ReturnUrl"]" id="signin-form_id">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="signin-text">
+                <span>Iniciar Sesión</span>
+            </div> <!-- / .signin-text -->
+            <div class="form-group w-icon">
+                <input type="text" asp-for="UsuSesion" class="form-control input-lg" placeholder="Usuario">
+                <span class="fa fa-user signin-form-icon"></span>
+            </div> <!-- / Username -->
+            <div class="form-group w-icon">
+                <input type="password" asp-for="UsuClave" class="form-control input-lg" placeholder="Contraseñas">
+                <span class="fa fa-lock signin-form-icon"></span>
+            </div> <!-- / Password -->
+            <div class="signin-with">
+                <button class="btn btn-info btn-lg" style="width:100%"><span>ENTRAR</span></button>
+                <Center> <a asp-action="Registro">Registrarse</a></Center>
+            </div>
+        </form>
+    </div>
+</div>

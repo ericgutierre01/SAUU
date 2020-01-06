@@ -1,0 +1,74 @@
+﻿
+<!--========== 2. $MAIN_NAVIGATION ==========-->
+<nav id="main-navbar" class="navbar navbar-inverse" role="navigation">
+    <!-- Main menu toggle -->
+    <button type="button" id="main-menu-toggle"><i class="navbar-icon fa fa-bars icon"></i><span class="hide-menu-text">HIDE MENU</span></button>
+
+    <div class="navbar-inner">
+        <!-- Main navbar header -->
+        <div class="navbar-header">
+
+            <!-- Logo -->
+            <a asp-controller="Ticket" asp-action="Index" class="navbar-brand">
+                <div><img alt="Logo" src="~/assets/demo/logo-big.png"></div>
+                SAUU
+            </a>
+
+            <!-- Main navbar toggle -->
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar-collapse"><i class="navbar-icon fa fa-bars"></i></button>
+
+        </div> <!-- / .navbar-header -->
+
+        <div id="main-navbar-collapse" class="collapse navbar-collapse main-navbar-collapse">
+            <div>
+                <div class="right clearfix">
+                    <ul class="nav navbar-nav pull-right right-navbar-nav">
+                        <li class="nav-icon-btn nav-icon-btn-danger dropdown">
+                            <a >
+
+                            </a>
+
+                            <!-- NOTIFICATIONS -->
+                            <!-- Javascript -->
+                            <script>
+                                init.push(function () {
+                                    $('#main-navbar-notifications').slimScroll({ height: 250 });
+                                });
+                            </script>
+                            <!-- / Javascript -->
+
+                        <!-- / .dropdown-menu -->
+                        </li>
+                        <!-- /3. $END_NAVBAR_ICON_BUTTONS -->
+                        @*<li>
+                            <form class="navbar-form pull-left">
+                                <input type="text" class="form-control" placeholder="Search">
+                            </form>
+                        </li>*@
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle user-menu" data-toggle="dropdown">
+                                <b>@User.Identity.Name</b>
+                            </a>
+                            <ul class="dropdown-menu" style="padding-bottom:0px">
+                                <li>
+                                    <a  asp-controller="Account" asp-action="Perfil">
+                                        <i class="dropdown-icon fa fa-user-circle"></i>
+                                        <span class="mm-text">Perfil</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <form asp-controller="Account" asp-action="Logout">
+                                        <button type="submit" class="btn btn-primary btn-outline" style="width:100%;">
+                                            <span class="dropdown-icon fa fa-power-off"></span>&nbsp;&nbsp;Cerrar Sesion
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul> <!-- / .navbar-nav -->
+                </div> <!-- / .right -->
+            </div>
+        </div> <!-- / #main-navbar-collapse -->
+    </div> <!-- / .navbar-inner -->
+</nav> <!-- / #main-navbar -->

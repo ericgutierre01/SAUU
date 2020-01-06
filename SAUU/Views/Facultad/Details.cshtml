@@ -1,0 +1,27 @@
+﻿@model SAUU.Data.Entities.Facultad
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="page-header">
+    <h1>
+        <i class="fa fa-book page-header-icon"></i>
+        <a asp-action="Index">Facultades</a> > @ViewData["Title"]
+    </h1>
+</div>
+
+<div>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.nombreFacultad)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.nombreFacultad)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.idFacultad" class="btn btn-primary">Editar</a> |
+    <a asp-action="Index" class="btn btn-success">Ir atras</a>
+</div>
